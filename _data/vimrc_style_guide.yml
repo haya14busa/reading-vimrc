@@ -1,0 +1,79 @@
+- id: style_001
+  title:
+    en: augroup & autocmd
+    ja: augroup & autocmd の使い方
+  content:
+    en: |
+      You should use `autocmd` with `augroup` and make sure to reset `autocmd` to make relodable vimrc
+
+      **Bad**
+
+      ```vim
+      autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+      ```
+
+      **Good**
+
+      ```vim
+      augroup MyVimrc
+          autocmd!
+          autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+      augroup END
+      ```
+
+    ja: |
+      autocmd は augroup と一緒に使い, 定義するときは `autocmd!` で定義されたものを一旦リセットしましょう.
+
+      **Bad**
+
+      ```vim
+      autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+      ```
+
+      **Good**
+
+      ```vim
+      augroup MyVimrc
+          autocmd!
+          autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+      augroup END
+      ```
+  help:
+    - :augroup
+    - autocmd.txt
+- id: style_002
+  title:
+    en: map & noremap
+    ja: map & noremap
+  content:
+    en: |
+      You should differenciate `map` and `noremap`. {rhs} defined with `:map` will be remapped but not with `:noremap` command.
+
+      **Bad**
+
+      ```vim
+      imap <C-f> <Left>
+      ```
+
+      **Good**
+
+      ```vim
+      inoremap <C-f> <Left>
+      ```
+    ja: |
+      `map` と `noremap` は区別して使用するべきです. `:map`で定義された {rhs} は再帰的にマップが適用され, `:noremap` ではされません。
+
+      **Bad**
+
+      ```vim
+      imap <C-f> <Left>
+      ```
+
+      **Good**
+
+      ```vim
+      inoremap <C-f> <Left>
+      ```
+  help:
+    - :map
+    - :noremap
